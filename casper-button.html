@@ -99,7 +99,7 @@
             type: Boolean,
             observer: '_disabledChanged'
           },
-          class: {
+          css_class: {
             type: String
           }
 
@@ -112,8 +112,8 @@
 
       ready() {
         super.ready();
-        if(this.class != undefined){
-          this.shadowRoot.querySelector("paper-button").classList.add(this.class);
+        if(this.css_class != undefined){
+          this.shadowRoot.querySelector("paper-button").classList.add(this.css_class);
         }
       }
 
