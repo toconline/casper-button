@@ -3,7 +3,10 @@
   "description": "click, click, click...",
   "main": "casper-button.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-spinner": "^2.1.0",
+    "paper-button": "^2.1.1",
+    "vaadin-progress-bar": "^1.0.0"
   },
   "devDependencies": {
     "paper-button": "^2.1.1",
