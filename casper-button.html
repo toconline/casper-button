@@ -21,7 +21,7 @@
 
       --mixin-button: {
         text-align: center;
-        font-weight: normal;
+        font-weight: 900;
         font-size: var(--default-button-size, 14px);
         -webkit-font-smoothing: antialiased;
         margin: 12px;
@@ -54,6 +54,7 @@
       paper-button{
         width: 100%;
         @apply --mixin-button;
+        background-color: var(--self-primary-color, var(--primary-color, green));
         margin: 0px;
         padding: 0;
         position: relative;
@@ -62,6 +63,7 @@
 
       paper-button:hover {
         @apply --mixin-button-hover;
+        background-color: var(--self-primary-variant-color, var(--primary-variant-color, green));
       }
 
       paper-button[disabled] {
@@ -193,7 +195,6 @@
       }
 
       _disabledChanged (newValue, oldValue) {
-        debugger
         this.shadowRoot.querySelector("paper-button").disabled = newValue;
       }
 
