@@ -3,6 +3,43 @@
 <link rel="import" href="../paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../vaadin-progress-bar/vaadin-progress-bar.html">
 
+<custom-style>
+  <style>
+    html {
+
+      --smooth-action: {
+        -webkit-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+      }
+
+      --smooth-action-hover: {
+        -webkit-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+      }
+
+      --mixin-button: {
+        text-align: center;
+        font-weight: normal;
+        font-size: var(--default-button-size, 14px);
+        -webkit-font-smoothing: antialiased;
+        margin: 12px;
+        height: 36px;
+        color: var(--on-primary-color, white);
+        background-color: var(--primary-color, red);
+        border-radius: var(--radius-buttons, 3px);
+        @apply --smooth-action;
+      }
+
+      --mixin-button-hover: {
+        background-color: var(--primary-variant-color, green);
+        @apply --smooth-action-hover;
+      }
+    }
+  </style>
+</custom-style>
+
 
 <dom-module id="casper-button">
   <template>
@@ -11,21 +48,20 @@
       :host {
         display: block;
         --lumo-primary-color: var(--primary-color);
+        margin: 0 10px 4px 0;
       }
 
       paper-button{
         width: 100%;
-        text-align: center;
-        background-color: var(--primary-color);
-        color: white;
+        @apply --mixin-button;
         margin: 0px;
         padding: 0;
-        transition: background-color 0.5s;
+        position: relative;
+        overflow: hidden;
       }
 
       paper-button:hover {
-        background: var(--dark-primary-color);
-        transition: background-color 0.5s;
+        @apply --mixin-button-hover;
       }
 
       paper-button[disabled] {
@@ -39,16 +75,17 @@
       vaadin-progress-bar{
         margin: 0px;
         height: 40px;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
 
-      paper-button {
-        position: relative;
-        overflow: hidden;
-      }
       paper-button paper-spinner-lite {
         position: absolute;
-        top: 8px;
-        left: 49%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
         width: 22px;
         height: 22px;
         --paper-spinner-color: white;
@@ -56,11 +93,20 @@
       }
 
       paper-button #submitText{
-        position: absolute;
-        /* background: yellow; */
-        width: 100%;
+        /* position: absolute; */
+        /* width: 100%; */
         line-height: 40px;
-        top: 0;
+        /* top: 0; */
+        padding: 0 10px;
+      }
+
+
+      paper-button #submitText.small{
+        line-height: 24px;
+      }
+
+      paper-button.small {
+        height: 24px;
       }
 
       paper-button.decline-button {
@@ -71,11 +117,16 @@
         background-color: #8e8e8e;
       }
 
+      ::slotted(a){
+        text-decoration: none;
+        color: white;
+      }
+
     </style>
-    <paper-button>
+    <paper-button id="main_button" class$='[[size_class]]'>
       <paper-spinner-lite id="spin"></paper-spinner-lite>
-      <span id="submitText" class='text'>
-        <slot name="text-button">Concordo e aceito</slot>
+      <span id="submitText" class$='text [[size_class]]'>
+        <slot>Concordo e aceito</slot>
       </span>
       <vaadin-progress-bar value="0" id="progress_bar" value="0"></vaadin-progress-bar>
     </paper-button>
@@ -94,6 +145,10 @@
       static get is() { return 'casper-button'; }
       static get properties() {
         return {
+          size: {
+            type: String,
+            value: 'm'
+          },
           progress: {
             type: String,
             value: 0,
@@ -119,20 +174,70 @@
         if(this.css_class != undefined){
           this.shadowRoot.querySelector("paper-button").classList.add(this.css_class);
         }
+
+        this.timmer_test = undefined;
+
+        this.size_class = this.size == 's' ? 'small' : '';
+
+        this.$.main_button.addEventListener('click', function (event) {
+          var link = this.querySelector("a");
+          if(link != undefined){
+            link = link.getAttribute("href");
+            if(link != undefined){
+              console.log("clicked inside casper-button", link)
+              this.submitting(true);
+            }
+          }
+
+        }.bind(this), false);
       }
 
-      _disabledChanged(newValue, oldValue) {
+      _disabledChanged (newValue, oldValue) {
+        debugger
         this.shadowRoot.querySelector("paper-button").disabled = newValue;
       }
 
-      _progressChanged(newValue, oldValue){
+      _progressChanged (newValue, oldValue){
 
         if(newValue == 0){
-          this.$.spin.active = false;
-          this.$.submitText.style.display = 'inline-block';
+          this.submitting(false);
         }
         this.$.progress_bar.value = newValue / 100;
       }
+
+
+      submitting (status) {
+        this.disableButton(status);
+
+        if(status == true) {
+          this.timmer_test = setTimeout(function(){
+            this.spinButton(status);
+          }.bind(this), 200);
+          this.$.submitText.style.opacity = 0;
+        }else {
+          this.progress = 0;
+          if(this.timmer_test != undefined){
+            clearTimeout(this.timmer_test);
+          }
+          this.spinButton(status);
+          this.$.submitText.style.opacity = 1;
+        }
+        window.dispatchEvent(new CustomEvent('casper-button-status', { detail: { target: this, submitting: status } }));
+      }
+
+      disableButton (status) {
+        this.$.main_button.disabled = status;
+      }
+
+      spinButton (status) {
+        this.$.spin.active = status;
+      }
+
+      done (){
+        // this.progress = 0;
+        // this.$.submitText.
+      }
+
     }
 
 
