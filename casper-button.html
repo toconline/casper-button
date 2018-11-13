@@ -66,6 +66,10 @@
         background-color: var(--self-primary-variant-color, var(--primary-variant-color, green));
       }
 
+      :host([disabled]) {
+        pointer-events: none;
+      }
+
       paper-button[disabled] {
         background: #eaeaea;
         color: #a8a8a8;
@@ -178,24 +182,26 @@
         }
 
         this.timmer_test = undefined;
-
         this.size_class = this.size == 's' ? 'small' : '';
 
-        this.$.main_button.addEventListener('click', function (event) {
-          var link = this.querySelector("a");
-          if(link != undefined){
-            link = link.getAttribute("href");
+        this.addEventListener('click', function(e) {
+          if ( this.$.main_button.disabled ) {
+            e.stopImmediatePropagation();
+          } else {
+            var link = this.querySelector("a");
             if(link != undefined){
-              console.log("clicked inside casper-button", link)
-              this.submitting(true);
+              link = link.getAttribute("href");
+              if(link != undefined){
+                console.log("clicked inside casper-button", link)
+                this.submitting(true);
+              }
             }
           }
-
-        }.bind(this), false);
+        }.bind(this));
       }
 
       _disabledChanged (newValue, oldValue) {
-        this.shadowRoot.querySelector("paper-button").disabled = newValue;
+        this.$.main_button.disabled = newValue;
       }
 
       _progressChanged (newValue, oldValue){
