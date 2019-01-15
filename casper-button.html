@@ -1,3 +1,4 @@
+<link rel="import" href="casper-button-actions.html">
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-spinner/paper-spinner-lite.html">
@@ -6,7 +7,6 @@
 <custom-style>
   <style>
     html {
-
       --smooth-action: {
         -webkit-transition: all 0.2s;
         -o-transition: all 0.2s;
@@ -20,15 +20,15 @@
       }
 
       --mixin-button: {
-        text-align: center;
-        font-weight: 900;
-        font-size: var(--default-button-size, 14px);
-        -webkit-font-smoothing: antialiased;
         margin: 12px;
         height: 36px;
+        font-weight: 900;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
         color: var(--on-primary-color, white);
-        background-color: var(--primary-color, red);
         border-radius: var(--radius-buttons, 3px);
+        font-size: var(--default-button-size, 14px);
+        background-color: var(--primary-color, red);
         @apply --smooth-action;
       }
 
@@ -40,30 +40,29 @@
   </style>
 </custom-style>
 
-
 <dom-module id="casper-button">
   <template>
-
     <style>
       :host {
-        display: block;
-        --lumo-primary-color: var(--primary-color);
+        display: flex;
         margin: 0 10px 4px 0;
+        --lumo-border-radius: 0;
+        --lumo-primary-color: var(--primary-color);
       }
 
-      paper-button{
-        width: 100%;
-        @apply --mixin-button;
-        background-color: var(--self-primary-color, var(--primary-color, green));
-        margin: 0px;
+      paper-button {
+        margin: 0 !important;
         padding: 0;
-        position: relative;
+        width: 100%;
         overflow: hidden;
+        position: relative;
+        background-color: var(--self-primary-color, var(--primary-color, green));
+        @apply --mixin-button;
       }
 
       paper-button:hover {
-        @apply --mixin-button-hover;
         background-color: var(--self-primary-variant-color, var(--primary-variant-color, green));
+        @apply --mixin-button-hover;
       }
 
       :host([disabled]) {
@@ -71,43 +70,50 @@
       }
 
       paper-button[disabled] {
-        background: #eaeaea;
-        color: #a8a8a8;
         cursor: auto;
+        color: #A8A8A8;
+        background: #EAEAEA;
         pointer-events: none;
         transition: background-color 0.5s;
       }
 
-      vaadin-progress-bar{
-        margin: 0px;
-        height: 40px;
-        position: absolute;
+      vaadin-progress-bar {
         top: 0;
         left: 0;
+        margin: 0;
+        height: 36px;
+        display: none;
+        position: absolute;
       }
 
       paper-button paper-spinner-lite {
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
         left: 0;
         right: 0;
         width: 22px;
         height: 22px;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
         --paper-spinner-color: white;
         --paper-spinner-stroke-width: 4px;
       }
 
-      paper-button #submitText{
-        /* position: absolute; */
-        /* width: 100%; */
-        line-height: 40px;
-        /* top: 0; */
-        padding: 0 10px;
+      paper-button {
+        width: auto;
+        padding: 0 15px;
       }
 
+      paper-button#actionsButton {
+        font-size: 13px;
+        min-width: unset;
+        border-radius: 0 3px 3px 0;
+      }
 
-      paper-button #submitText.small{
+      paper-button #buttonText {
+        line-height: 36px;
+      }
+
+      paper-button #buttonText.small {
         line-height: 24px;
       }
 
@@ -116,26 +122,37 @@
       }
 
       paper-button.decline-button {
-        background: #bdbdbd;
+        background: #BDBDBD;
       }
 
       paper-button.decline-button:hover {
-        background-color: #8e8e8e;
+        background-color: #8E8E8E;
       }
 
-      ::slotted(a){
-        text-decoration: none;
+      ::slotted(a) {
         color: white;
+        text-decoration: none;
       }
-
     </style>
-    <paper-button id="main_button" class$='[[size_class]]'>
-      <paper-spinner-lite id="spin"></paper-spinner-lite>
-      <span id="submitText" class$='text [[size_class]]'>
+    <paper-button
+      id="mainButton"
+      class$="[[sizeClass]]"
+      on-click="_mainButtonClicked">
+      <span id="buttonText" class$="text [[sizeClass]]">
         <slot>Concordo e aceito</slot>
       </span>
-      <vaadin-progress-bar value="0" id="progress_bar" value="0"></vaadin-progress-bar>
+      <vaadin-progress-bar value="0" id="progressBar"></vaadin-progress-bar>
+      <paper-spinner-lite id="spin"></paper-spinner-lite>
     </paper-button>
+    <template is="dom-if" if="[[actions]]">
+      <paper-button id="actionsButton" on-click="_actionsButtonClicked">&#x25BC;</paper-button>
+        <casper-button-actions
+          actions="[[actions]]"
+          no-overlap
+          vertical-align="top"
+          horizontal-align="right">
+        </casper-button-actions>
+    </template>
   </template>
 
   <script>
@@ -148,7 +165,10 @@
      * @demo demo/index.html
      */
     class CasperButton extends Polymer.Element {
-      static get is() { return 'casper-button'; }
+      static get is () {
+        return 'casper-button';
+      }
+
       static get properties() {
         return {
           size: {
@@ -167,7 +187,6 @@
           css_class: {
             type: String
           }
-
         };
       }
 
@@ -177,77 +196,84 @@
 
       ready() {
         super.ready();
-        if(this.css_class != undefined){
-          this.shadowRoot.querySelector("paper-button").classList.add(this.css_class);
+        if (this.css_class) {
+          this.shadowRoot.querySelector('paper-button').classList.add(this.css_class);
         }
 
-        this.timmer_test = undefined;
-        this.size_class = this.size == 's' ? 'small' : '';
+        this.sizeClass = this.size == 's' ? 'small' : '';
+        this.spinnerTimer = undefined;
 
-        this.addEventListener('click', function(e) {
-          if ( this.$.main_button.disabled ) {
-            e.stopImmediatePropagation();
-          } else {
-            var link = this.querySelector("a");
-            if(link != undefined){
-              link = link.getAttribute("href");
-              if(link != undefined){
-                console.log("clicked inside casper-button", link)
-                this.submitting(true);
-              }
-            }
-          }
-        }.bind(this));
+        // Remove the default margin.
+        if (this.hasAttribute('no-container-margin')) this.style.margin = 0;
+
+        // Used an attribute and not the this.actions.length > 0 to avoid Polymer.RenderStatus and further blinking.
+        if (this.hasAttribute('has-actions')) this.$.mainButton.style.borderRadius = '3px 0 0 3px';
       }
 
       _disabledChanged (newValue, oldValue) {
-        this.$.main_button.disabled = newValue;
+        this.$.mainButton.disabled = newValue;
       }
 
-      _progressChanged (newValue, oldValue){
-
-        if(newValue == 0){
+      _progressChanged (newValue, oldValue) {
+        if (newValue == 0) {
           this.submitting(false);
+          this.$.progressBar.style.display = 'none';
+        } else {
+          this.$.progressBar.style.display = 'block';
         }
-        this.$.progress_bar.value = newValue / 100;
+
+        this.$.progressBar.value = newValue / 100;
       }
 
 
       submitting (status) {
         this.disableButton(status);
 
-        if(status == true) {
-          this.timmer_test = setTimeout(function(){
-            this.spinButton(status);
-          }.bind(this), 200);
-          this.$.submitText.style.opacity = 0;
-        }else {
+        if (status == true) {
+          this.spinnerTimer = setTimeout(() => this.spinButton(status), 200);
+          this.$.buttonText.style.opacity = 0;
+        } else {
           this.progress = 0;
-          if(this.timmer_test != undefined){
-            clearTimeout(this.timmer_test);
+          if (this.spinnerTimer) {
+            clearTimeout(this.spinnerTimer);
           }
+
           this.spinButton(status);
-          this.$.submitText.style.opacity = 1;
+          this.$.buttonText.style.opacity = 1;
         }
+
         window.dispatchEvent(new CustomEvent('casper-button-status', { detail: { target: this, submitting: status } }));
       }
 
       disableButton (status) {
-        this.$.main_button.disabled = status;
+        this.$.mainButton.disabled = status;
       }
 
       spinButton (status) {
         this.$.spin.active = status;
       }
 
-      done (){
-        // this.progress = 0;
-        // this.$.submitText.
+      _mainButtonClicked (event) {
+        if (this.$.mainButton.disabled) {
+          event.stopImmediatePropagation();
+          return;
+        }
+
+        const anchorElement = this.querySelector('a');
+        if (anchorElement && anchorElement.link.getAttribute('href')) {
+          this.submitting(true);
+        }
       }
 
+      _actionsButtonClicked (event) {
+        // Prevent the event from bubbling up.
+        event.stopImmediatePropagation();
+
+        this._buttonActions = this._casperButtonActions || this.shadowRoot.querySelector('casper-button-actions');
+        this._buttonActions.positionTarget = event.target;
+        this._buttonActions.open();
+      }
     }
-
-
 
     window.customElements.define(CasperButton.is, CasperButton);
   </script>
