@@ -188,7 +188,7 @@
             type: Boolean,
             observer: '_disabledChanged'
           },
-          css_class: {
+          cssClass: {
             type: String
           }
         };
@@ -201,7 +201,7 @@
       ready() {
         super.ready();
         if (this.css_class) {
-          this.shadowRoot.querySelector('paper-button').classList.add(this.css_class);
+          this.shadowRoot.querySelector('paper-button').classList.add(this.cssClass);
         }
 
         this.sizeClass = this.size == 's' ? 'small' : '';
@@ -214,11 +214,11 @@
         if (this.hasAttribute('has-actions')) this.$.mainButton.style.borderRadius = '3px 0 0 3px';
       }
 
-      _disabledChanged (newValue, oldValue) {
+      _disabledChanged (newValue) {
         this.$.mainButton.disabled = newValue;
       }
 
-      _progressChanged (newValue, oldValue) {
+      _progressChanged (newValue) {
         if (newValue == 0) {
           this.submitting(false);
           this.$.progressBar.style.display = 'none';
