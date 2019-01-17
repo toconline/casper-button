@@ -5,10 +5,13 @@
     "ecmaVersion": 6
   },
   "rules": {
-    "camelcase": "error",
-    "no-var": "error",
     "semi": "error",
-    "no-useless-escape": "off"
+    "no-var": "error",
+    "camelcase": "error",
+    "key-spacing": "error",
+    "comma-spacing": "error",
+    "keyword-spacing": "error",
+    "object-curly-spacing": [2, "always"]
   },
   "env": {
     "browser": true,

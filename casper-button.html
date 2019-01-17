@@ -98,18 +98,16 @@
         --paper-spinner-stroke-width: 4px;
       }
 
-      paper-button {
-        width: auto;
-      }
-
       paper-button#mainButton {
+        flex-grow: 1;
         padding: 0 15px;
       }
 
       paper-button#actionsButton {
+        width: auto;
+        padding: 0 10px;
         font-size: 13px;
         min-width: unset;
-        padding: 0 10px;
         border-radius: 0 3px 3px 0;
       }
 
@@ -209,6 +207,9 @@
 
         // Remove the default margin.
         if (this.hasAttribute('no-container-margin')) this.style.margin = 0;
+
+        // Set the width to auto instead of occupying 100% of the available space.
+        if (this.hasAttribute('full-width')) this.style.width = '100%';
 
         // Used an attribute and not the this.actions.length > 0 to avoid Polymer.RenderStatus and further blinking.
         if (this.hasAttribute('has-actions')) this.$.mainButton.style.borderRadius = '3px 0 0 3px';
