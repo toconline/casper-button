@@ -147,7 +147,9 @@
       <paper-spinner-lite id="spin"></paper-spinner-lite>
     </paper-button>
     <template is="dom-if" if="[[actions]]">
-      <paper-button id="actionsButton" on-click="_actionsButtonClicked">&#x25BC;</paper-button>
+      <paper-button id="actionsButton" on-click="_actionsButtonClicked">
+        <iron-icon icon="casper-icons:arrow-drop-down"></iron-icon>
+      </paper-button>
         <casper-button-actions
           actions="[[actions]]"
           no-overlap
@@ -273,8 +275,10 @@
         // Prevent the event from bubbling up.
         event.stopImmediatePropagation();
 
+        this._positionTarget = this._positionTarget || this.shadowRoot.querySelector('#actionsButton');
         this._buttonActions = this._casperButtonActions || this.shadowRoot.querySelector('casper-button-actions');
-        this._buttonActions.positionTarget = event.target;
+
+        this._buttonActions.positionTarget = this._positionTarget;
         this._buttonActions.open();
       }
     }
