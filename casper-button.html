@@ -150,12 +150,13 @@
       <paper-button id="actionsButton" on-click="_actionsButtonClicked">
         <iron-icon icon="casper-icons:arrow-drop-down"></iron-icon>
       </paper-button>
-        <casper-button-actions
-          actions="[[actions]]"
-          no-overlap
-          vertical-align="top"
-          horizontal-align="right">
-        </casper-button-actions>
+      <casper-button-actions
+        no-overlap
+        vertical-align="top"
+        actions="[[actions]]"
+        horizontal-align="right"
+        opened="[[_buttonActionsOpened]]">
+      </casper-button-actions>
     </template>
   </template>
 
@@ -190,6 +191,10 @@
           },
           cssClass: {
             type: String
+          },
+          _buttonActionsOpened: {
+            type: Boolean,
+            value: false
           }
         };
       }
@@ -276,10 +281,10 @@
         event.stopImmediatePropagation();
 
         this._positionTarget = this._positionTarget || this.shadowRoot.querySelector('#actionsButton');
-        this._buttonActions = this._casperButtonActions || this.shadowRoot.querySelector('casper-button-actions');
-
+        this._buttonActions = this._buttonActions || this.shadowRoot.querySelector('casper-button-actions');
         this._buttonActions.positionTarget = this._positionTarget;
-        this._buttonActions.open();
+
+        this._buttonActionsOpened = !this._buttonActionsOpened;
       }
     }
 
