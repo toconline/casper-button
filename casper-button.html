@@ -155,7 +155,7 @@
         vertical-align="top"
         actions="[[actions]]"
         horizontal-align="right"
-        opened="[[_buttonActionsOpened]]">
+        opened="[[_buttonActionsOpen]]">
       </casper-button-actions>
     </template>
   </template>
@@ -191,16 +191,26 @@
           },
           cssClass: {
             type: String
-          },
-          _buttonActionsOpened: {
-            type: Boolean,
-            value: false
           }
         };
       }
 
       connectedCallback() {
         super.connectedCallback();
+
+        Polymer.RenderStatus.afterNextRender(this, () => {
+          this._actionsButton = this.shadowRoot.querySelector('#actionsButton');
+          this._actionsButtonOverlay = this.shadowRoot.querySelector('casper-button-actions');
+
+          if (!this._actionsButton || !this._actionsButtonOverlay) return;
+
+          this._actionsButtonOverlay.positionTarget = this._actionsButton;
+          this._actionsButtonOverlay.addEventListener('iron-overlay-canceled', event => {
+            if (event.detail.path.includes(this._actionsButton)) {
+              event.preventDefault();
+            }
+          });
+        });
       }
 
       ready() {
@@ -280,11 +290,7 @@
         // Prevent the event from bubbling up.
         event.stopImmediatePropagation();
 
-        this._positionTarget = this._positionTarget || this.shadowRoot.querySelector('#actionsButton');
-        this._buttonActions = this._buttonActions || this.shadowRoot.querySelector('casper-button-actions');
-        this._buttonActions.positionTarget = this._positionTarget;
-
-        this._buttonActionsOpened = !this._buttonActionsOpened;
+        this._actionsButtonOverlay.toggle();
       }
     }
 
