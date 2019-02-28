@@ -233,6 +233,7 @@
 
       _disabledChanged (newValue) {
         this.$.mainButton.disabled = newValue;
+        this._actionsButton.disabled = newValue;
       }
 
       _progressChanged (newValue) {
