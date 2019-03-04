@@ -235,8 +235,10 @@
         Polymer.RenderStatus.afterNextRender(this, () => {
           this.$.mainButton.disabled = newValue;
 
-          this._actionsButton = this._actionsButton || this.shadowRoot.querySelector('#actionsButton');
-          this._actionsButton.disabled = newValue;
+          if (this.actions) {
+            this._actionsButton = this._actionsButton || this.shadowRoot.querySelector('#actionsButton');
+            this._actionsButton.disabled = newValue;
+          }
         });
       }
 
