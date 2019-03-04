@@ -198,8 +198,8 @@
         super.connectedCallback();
 
         Polymer.RenderStatus.afterNextRender(this, () => {
-          this._actionsButton = this._actionsButton || this.shadowRoot.querySelector('#actionsButton');
           this._actionsButtonOverlay = this.shadowRoot.querySelector('casper-button-actions');
+          this._actionsButton = this._actionsButton || this.shadowRoot.querySelector('#actionsButton');
 
           if (!this._actionsButton || !this._actionsButtonOverlay) return;
 
@@ -229,6 +229,11 @@
 
         // Used an attribute and not the this.actions.length > 0 to avoid Polymer.RenderStatus and further blinking.
         if (this.hasAttribute('has-actions')) this.$.mainButton.style.borderRadius = '3px 0 0 3px';
+
+        // This is used to not let disabled clicks go through the DOM tree.
+        this.addEventListener('click', event => {
+          if (this.disabled) event.stopImmediatePropagation();
+        });
       }
 
       _disabledChanged (newValue) {
@@ -281,7 +286,8 @@
       }
 
       _mainButtonClicked (event) {
-        if (this.$.mainButton.disabled) {
+        if (this.disabled) {
+          // Prevent the event from bubbling up.
           event.stopImmediatePropagation();
           return;
         }
@@ -295,6 +301,8 @@
       _actionsButtonClicked (event) {
         // Prevent the event from bubbling up.
         event.stopImmediatePropagation();
+
+        if (this.disabled) return;
 
         this._actionsButtonOverlay.toggle();
       }
