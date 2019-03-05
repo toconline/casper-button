@@ -147,7 +147,10 @@
       <paper-spinner-lite id="spin"></paper-spinner-lite>
     </paper-button>
     <template is="dom-if" if="[[actions]]">
-      <paper-button id="actionsButton" on-click="_actionsButtonClicked">
+      <paper-button
+        id="actionsButton"
+        class$="[[sizeClass]]"
+        on-click="_actionsButtonClicked">
         <iron-icon icon="casper-icons:arrow-drop-down"></iron-icon>
       </paper-button>
       <casper-button-actions
