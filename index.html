@@ -2,15 +2,41 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=demo/" />
-    <title>casper-button</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>Casper-Button Demo</title>
+
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="casper-button.js"></script>
+    <style>
+      html {
+        --primary-color: #00ABC1;
+        --primary-variant-color: #127886;
+      }
+    </style>
   </head>
   <body>
-    <!--
-        ELEMENT API DOCUMENTATION SUPPORT COMING SOON
-        Visit demo/index.html to see live examples of your element running.
-        This page will automatically redirect you there when run in the browser
-        with `polymer serve`.
-      -->
+    <div class="vertical-section-container centered">
+      <casper-button></casper-button>
+      <casper-button>With Text</casper-button>
+      <casper-button disabled>Disabled</casper-button>
+      <casper-button id="submitting">Submitting</casper-button>
+      <casper-button id="actions" has-actions>With Actions</casper-button>
+      <casper-button id="progress"></casper-button>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', () => {
+        // Submitting and progress.
+        document.querySelector('#progress').submitting(true);
+        document.querySelector('#progress').progress = 50;
+
+        // Submitting.
+        document.querySelector('#submitting').submitting(true);
+
+        // Actions.
+        document.querySelector('#actions').actions = [
+          { text: 'Alert', onClick: () => alert('Click') }
+        ];
+      });
+    </script>
   </body>
 </html>
