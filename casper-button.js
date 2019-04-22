@@ -287,7 +287,7 @@ class CasperButton extends PolymerElement {
     clearTimeout(this.spinnerTimer);
     this.spinnerTimer = undefined;
     this.$.spin.active = false;
-    this.$.buttonText. = text || '';
+    this.$.buttonText.innerText = text || '';
     this.$.buttonText.style.opacity = 1;
   }
 
