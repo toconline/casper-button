@@ -281,6 +281,16 @@ class CasperButton extends PolymerElement {
     this.$.spin.active = status;
   }
 
+  operationComplete (text) {
+    this.progress = 0;
+    this.disabled = true;
+    clearTimeout(this.spinnerTimer);
+    this.spinnerTimer = undefined;
+    this.$.spin.active = false;
+    this.$.buttonText. = text || '';
+    this.$.buttonText.style.opacity = 1;
+  }
+
   _mainButtonClicked (event) {
     if (this.disabled) {
       // Prevent the event from bubbling up.
