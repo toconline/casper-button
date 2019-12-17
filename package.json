@@ -11,13 +11,13 @@
   "main": "casper-button.js",
   "dependencies": {
     "@casper2020/casper-icons": "^1.x",
-    "@polymer/iron-fit-behavior": "^3.0.1",
-    "@polymer/iron-icon": "^3.0.1",
-    "@polymer/iron-overlay-behavior": "^3.0.2",
-    "@polymer/paper-button": "^3.0.0",
-    "@polymer/paper-spinner": "^3.0.0",
-    "@polymer/polymer": "^3.0.0",
-    "@vaadin/vaadin-progress-bar": "^1.1.0"
+    "@polymer/iron-fit-behavior": "^3.x",
+    "@polymer/iron-icon": "^3.x",
+    "@polymer/iron-overlay-behavior": "^3.x",
+    "@polymer/paper-button": "^3.x",
+    "@polymer/paper-spinner": "^3.x",
+    "@polymer/polymer": "^3.x",
+    "@vaadin/vaadin-progress-bar": "^1.x"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",
