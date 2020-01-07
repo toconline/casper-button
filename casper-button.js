@@ -1,7 +1,6 @@
 import './casper-button-actions.js';
-import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/paper-button/paper-button.js';
-import '@casper2020/casper-icons/casper-icons.js';
+import '@casper2020/casper-icons/casper-icon.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@vaadin/vaadin-progress-bar/vaadin-progress-bar.js';
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
@@ -157,7 +156,7 @@ class CasperButton extends PolymerElement {
       </paper-button>
       <template is="dom-if" if="[[actions]]">
         <paper-button id="actionsButton" class$="[[sizeClass]]" on-click="_actionsButtonClicked">
-          <iron-icon icon="casper-icons:arrow-drop-down"></iron-icon>
+          <casper-icon icon="fa-regular:angle-down"></casper-icon>
         </paper-button>
         <casper-button-actions no-overlap="" vertical-align="top" actions="[[actions]]" horizontal-align="right">
         </casper-button-actions>

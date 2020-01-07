@@ -12,7 +12,6 @@
   "dependencies": {
     "@casper2020/casper-icons": "^1.x",
     "@polymer/iron-fit-behavior": "^3.x",
-    "@polymer/iron-icon": "^3.x",
     "@polymer/iron-overlay-behavior": "^3.x",
     "@polymer/paper-button": "^3.x",
     "@polymer/paper-spinner": "^3.x",
