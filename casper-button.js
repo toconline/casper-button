@@ -1,6 +1,6 @@
 import './casper-button-actions.js';
 import '@polymer/paper-button/paper-button.js';
-import '@casper2020/casper-icons/casper-icon.js';
+import '@cloudware-casper/casper-icons/casper-icon.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@vaadin/vaadin-progress-bar/vaadin-progress-bar.js';
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
