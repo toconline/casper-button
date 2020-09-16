@@ -13,7 +13,7 @@
   },
   "main": "casper-button.js",
   "dependencies": {
-    "@cloudware-casper/casper-icons": "^1.x",
+    "@cloudware-casper/casper-icons": "^2.x",
     "@polymer/iron-fit-behavior": "^3.x",
     "@polymer/iron-overlay-behavior": "^3.x",
     "@polymer/paper-button": "^3.x",
