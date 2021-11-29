@@ -37,7 +37,8 @@ customStyle.innerHTML = `
         }
 
         --mixin-button-hover: {
-          background-color: var(--primary-variant-color, green);
+          background-color: var(--light-primary-color, var(--self-primary-variant-color));
+          color: var(--primary-color);
           @apply --smooth-action-hover;
         }
       }
@@ -70,7 +71,6 @@ class CasperButton extends PolymerElement {
         }
 
         paper-button:hover {
-          background-color: var(--self-primary-variant-color, var(--primary-variant-color, green));
           @apply --mixin-button-hover;
         }
 
