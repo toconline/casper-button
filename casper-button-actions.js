@@ -63,7 +63,7 @@ class CasperButtonActions extends mixinBehaviors([IronOverlayBehavior, IronFitBe
     const actionClicked = event.target;
     const actionClickedIndex = [...actionClicked.parentNode.children].indexOf(actionClicked);
 
-    this.actions[actionClickedIndex].onClick();
+    this.actions[actionClickedIndex].onClick(event);
     this.close();
   }
 }

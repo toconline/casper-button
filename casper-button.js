@@ -146,6 +146,7 @@ class CasperButton extends PolymerElement {
           color: white;
           text-decoration: none;
         }
+
       </style>
       <paper-button id="mainButton" class$="[[sizeClass]]" on-click="_mainButtonClicked">
         <span id="buttonText" class$="text [[sizeClass]]">
@@ -215,6 +216,11 @@ class CasperButton extends PolymerElement {
 
     this.sizeClass = this.size == 's' ? 'small' : '';
     this.spinnerTimer = undefined;
+
+    if ( this.actions ) {
+      this.shadowRoot.querySelector("#mainButton").style.borderTopRightRadius = 0;
+      this.shadowRoot.querySelector("#mainButton").style.borderBottomRightRadius = 0;
+    }
 
     // Remove the default margin.
     if (this.hasAttribute('no-container-margin')) this.style.margin = 0;
