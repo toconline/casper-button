@@ -118,6 +118,7 @@ class CasperButton extends PolymerElement {
           font-size: 13px;
           min-width: unset;
           border-radius: 0 3px 3px 0;
+          border-left: 1px solid rgba(255,255,255,0.5);
         }
 
         paper-button #buttonText {
