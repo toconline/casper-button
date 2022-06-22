@@ -117,7 +117,9 @@ class CasperButton extends PolymerElement {
           padding: 0 10px;
           font-size: 13px;
           min-width: unset;
-          border-radius: 0 3px 3px 0;
+          border-radius: var(--mixin-button_-_border-radius, 3px);
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
           border-left: 1px solid rgba(255,255,255,0.5);
         }
 
