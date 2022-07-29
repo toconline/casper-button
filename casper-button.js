@@ -25,7 +25,6 @@ customStyle.innerHTML = `
 
         --mixin-button: {
           margin: 12px;
-          height: 36px;
           font-weight: 900;
           text-align: center;
           -webkit-font-smoothing: antialiased;
@@ -33,6 +32,9 @@ customStyle.innerHTML = `
           border-radius: var(--radius-buttons, 3px);
           font-size: var(--default-button-size, 14px);
           background-color: var(--primary-color, red);
+          border-width: var(--mixin-button_-_border-width, 0);
+          border-style: var(--mixin-button_-_border-style, solid);
+          border-color: var(--mixin-button_-_border-color, none);
           @apply --smooth-action;
         }
 
@@ -129,7 +131,7 @@ class CasperButton extends PolymerElement {
         }
 
         paper-button {
-          height: 36px;
+          height: var(--mixin-button_-_height, 36px);
         }
 
         paper-button.small {
