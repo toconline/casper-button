@@ -206,7 +206,7 @@ class CasperButton extends PolymerElement {
 
       this._actionsButtonOverlay.positionTarget = this._actionsButton;
       this._actionsButtonOverlay.addEventListener('iron-overlay-canceled', event => {
-        if (event.detail.path.includes(this._actionsButton)) {
+        if (event.detail.composedPath().includes(this._actionsButton)) {
           event.preventDefault();
         }
       });
