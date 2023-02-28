@@ -153,7 +153,7 @@ class CasperButton extends PolymerElement {
         }
 
       </style>
-      <paper-button id="mainButton" class$="[[sizeClass]]" on-click="_mainButtonClicked">
+      <paper-button id="mainButton" class$="[[sizeClass]]" on-click="_mainButtonClicked" part="main-button">
         <span id="buttonText" class$="text [[sizeClass]]">
           <slot>Concordo e aceito</slot>
         </span>
