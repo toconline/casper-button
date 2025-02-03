@@ -1,13 +1,13 @@
 {
   "description": "click, click, click...",
-  "name": "@cloudware-casper/casper-button",
+  "name": "@toconline/casper-button",
   "version": "2.0.7",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "main": "casper-button.js",
   "dependencies": {
-    "@cloudware-casper/casper-icons": "^3.x",
+    "@toconline/casper-icons": "^3.x",
     "@polymer/paper-button": "^3.x",
     "@polymer/paper-spinner": "^3.x",
     "@polymer/polymer": "^3.x",
